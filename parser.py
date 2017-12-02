@@ -12,7 +12,6 @@ def adjust_list(lest) :
 
 f_handle = open("scanner_output.txt","r")
 file = f_handle.readlines()
-print (file)
 filee = []
 
 for line in file :
@@ -22,13 +21,11 @@ for line in file :
 
 tokens = adjust_list(filee)
 
-
-
 i=0
-token=0
+token=tokens[0]
 
 def Error():
-	print ("Error")
+	print ("Error at",token)
 	sys.exit()
 
 
@@ -38,10 +35,14 @@ def match(t):
 	global tokens
 
 	if (t==token):
-		i+=1
-		token=tokens[i]
+		if (i < len(tokens)-1) :
+			i+=1
+			token=tokens[i]
+		else :
+			print ("program parsed successfully ending with the token \"",token,"\"")	
 	else:
 		Error()
+
 
 
 def program() :
@@ -100,22 +101,21 @@ def assign_stmt():
     match('identifier')
     match(':=')
     exp()
+    #heree
 
 def read_stmt():
-    match('read')
-    match('identifier')
+	match('read')
+	match('identifier')
 
 def write_stmt():
     match('write')
     exp()
 
 def exp():
-    simple_exp()
-    if (token == '<' or token == '='):
-        #condition
-        simple_exp()
-    else :
-    	Error()    
+	simple_exp()
+	if (token == '<' or token == '='):
+		comparison_op()
+		simple_exp()    
             
             
 
@@ -130,7 +130,7 @@ def simple_exp():
     term()
     while (token == '+' or token == '-'):
         add_op()
-        term()
+        term()   
         
 
 
