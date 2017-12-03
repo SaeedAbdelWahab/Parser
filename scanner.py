@@ -6,7 +6,7 @@ class Scanner :
 	def __init__(self) :
 		self.f_handle = open("tiny_sample_code.txt","r")
 		self.file = self.f_handle.readlines()
-		self.text_file = open("test.txt", "w")
+		self.text_file = open("scanner_output.txt", "w")
 
 	def saveToken(self,token) :
 		specialSymbols = ["+","-","*","/","=","<",">","(",")",";",":="]
@@ -70,7 +70,8 @@ class Scanner :
 
 				old_state = state
 
-		self.saveToken(token)	
+		self.saveToken(token)
+		self.text_file.close()	
 
 
 			

@@ -1,10 +1,6 @@
 
 import sys
-
-
-text_file = open("parser_output.txt", "w")
-
-
+from scanner import Scanner
 
 
 def adjust_list(lest) :
@@ -16,24 +12,9 @@ def adjust_list(lest) :
 			adjusted_list.append(item[1])
 	return adjusted_list
 
-f_handle = open("scanner_output.txt","r")
-file = f_handle.readlines()
-filee = []
-
-for line in file :
-	line = line.replace('\n','')
-	line = line.replace(' ','')
-	filee.append(line.rsplit(':',1))	
-
-tokens = adjust_list(filee)
-
-i=0
-token=tokens[0]
-
 def Error():
-	print ("Error at",token)
+	print ("Error found at",token)
 	sys.exit()
-
 
 def match(t):
 	global i
@@ -42,11 +23,11 @@ def match(t):
 	if (t==token):
 		if (i < len(tokens)-1) :
 			i+=1
-			token=tokens[i]				
+			token=tokens[i]	
+		else : 
+			print ("Program was parsed successfully with no errors")			
 	else:
 		Error()
-
-
 
 def program() :
 	stmt_sequence()
@@ -98,8 +79,6 @@ def if_stmt() :
 		Error()	
 	text_file.write("If_Statment Found \n")	
 
-
-
 def repeat_stmt():
     match('repeat')
     stmt_sequence()
@@ -131,8 +110,6 @@ def exp():
 		simple_exp() 	   
 	text_file.write("Expression Found \n")   
             
-
-
 def comparison_op():
     if (token=='<' or token == '='):
         match(token)
@@ -146,9 +123,7 @@ def simple_exp():
         add_op()
         term()  
     text_file.write("Simple_Expression Found \n")     
-        
-
-
+       
 def add_op():
     if (token=='+' or token == '-'):
         match(token)
@@ -162,7 +137,6 @@ def term():
 		mulop()	
 		factor()
 	text_file.write("Term Found \n")	
-
 
 def mulop():
 	if(token=="*" or token=="/"):
@@ -180,6 +154,27 @@ def factor():
 		match(")")
 	else:
 		Error() 
-	text_file.write("Factor Found \n")	   							
+	text_file.write("Factor Found \n")	
 
+
+
+program_scanner = Scanner()
+program_scanner.scan()
+
+f_handle = open("scanner_output.txt","r")
+file = f_handle.readlines()
+token_list = []
+
+for line in file :
+	line = line.replace('\n','')
+	line = line.replace(' ','')
+	token_list.append(line.rsplit(':',1))	
+
+tokens = adjust_list(token_list)
+
+text_file = open("parser_output.txt", "w")
+
+i = 0
+token = tokens[0]
+  							
 program()
