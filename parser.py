@@ -1,6 +1,11 @@
 
 import sys
 
+text_file = open("parser_output.txt", "w")
+
+
+
+
 def adjust_list(lest) :
 	adjusted_list = []
 	for item in lest :
@@ -47,6 +52,8 @@ def match(t):
 
 def program() :
 	stmt_sequence()
+	print ("program statment found")
+	text_file.write("Program statment found \n")
 
 def stmt_sequence():
 	statment()
@@ -68,6 +75,8 @@ def statment():
 		Error()	
 
 def if_stmt() :
+	print("if statment found")
+	text_file.write("If statment found \n")
 	if (token == "if") :
 		match("if")
 		exp()
@@ -91,25 +100,35 @@ def if_stmt() :
 		Error()	
 
 
+
 def repeat_stmt():
+    print ("repeat statment found")
+    text_file.write("Repeat statment found \n")
     match('repeat')
     stmt_sequence()
     match('until')
     exp()
+    
 
 def assign_stmt():
+    print ("assignment statment found")
+    text_file.write("Assignment statment found \n")
     match('identifier')
     match(':=')
     exp()
     #heree
 
 def read_stmt():
+	print ("read statment found")
+	text_file.write("Read statment found \n")
 	match('read')
 	match('identifier')
 
 def write_stmt():
-    match('write')
-    exp()
+	print ("write statment found")
+	text_file.write("Write statment found \n")
+	match('write')
+	exp()
 
 def exp():
 	simple_exp()
@@ -139,9 +158,6 @@ def add_op():
         match(token)
     else:
         Error()
-
-##Sherif
-
 
 def term():
 	factor()
