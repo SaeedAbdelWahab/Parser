@@ -1,6 +1,7 @@
 
 import sys
 
+
 text_file = open("parser_output.txt", "w")
 
 
