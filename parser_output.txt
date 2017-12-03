@@ -1,0 +1,8 @@
+Read statment found 
+If statment found 
+Assignment statment found 
+Repeat statment found 
+Assignment statment found 
+Assignment statment found 
+Write statment found 
+Program statment found 
