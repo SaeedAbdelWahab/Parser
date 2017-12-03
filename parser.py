@@ -38,13 +38,10 @@ def match(t):
 	global i
 	global token
 	global tokens
-
 	if (t==token):
 		if (i < len(tokens)-1) :
 			i+=1
-			token=tokens[i]
-		else :
-			print ("program parsed successfully ending with the token \"",token,"\"")	
+			token=tokens[i]				
 	else:
 		Error()
 
@@ -52,14 +49,15 @@ def match(t):
 
 def program() :
 	stmt_sequence()
-	print ("program statment found")
-	text_file.write("Program statment found \n")
+	text_file.write("Program Found \n")
 
 def stmt_sequence():
 	statment()
 	while (token == ";"):
 		match(";")
 		statment()
+	text_file.write("Statment_sequence Found \n")	
+
 def statment():
 	if (token == "if") :
 		if_stmt()
@@ -73,10 +71,9 @@ def statment():
 		assign_stmt()
 	else :
 		Error()	
+	text_file.write("Statment Found \n")	
 
 def if_stmt() :
-	print("if statment found")
-	text_file.write("If statment found \n")
 	if (token == "if") :
 		match("if")
 		exp()
@@ -98,44 +95,40 @@ def if_stmt() :
 			Error()
 	else :
 		Error()	
+	text_file.write("If_Statment Found \n")	
 
 
 
 def repeat_stmt():
-    print ("repeat statment found")
-    text_file.write("Repeat statment found \n")
     match('repeat')
     stmt_sequence()
     match('until')
     exp()
-    
+    text_file.write("Repeat_Statment Found \n")
 
 def assign_stmt():
-    print ("assignment statment found")
-    text_file.write("Assignment statment found \n")
     match('identifier')
     match(':=')
     exp()
+    text_file.write("Assignment_Statment Found \n")
     #heree
 
 def read_stmt():
-	print ("read statment found")
-	text_file.write("Read statment found \n")
 	match('read')
 	match('identifier')
+	text_file.write("Read_Statment Found \n")
 
 def write_stmt():
-	print ("write statment found")
-	text_file.write("Write statment found \n")
 	match('write')
 	exp()
+	text_file.write("Write_Statment Found \n")
 
 def exp():
 	simple_exp()
 	if (token == '<' or token == '='):
 		comparison_op()
-		simple_exp()    
-            
+		simple_exp() 	   
+	text_file.write("Expression Found \n")   
             
 
 
@@ -144,12 +137,14 @@ def comparison_op():
         match(token)
     else:
         Error()
+    text_file.write("Comparison_Operator Found \n")
 
 def simple_exp():
     term()
     while (token == '+' or token == '-'):
         add_op()
-        term()   
+        term()  
+    text_file.write("Simple_Expression Found \n")     
         
 
 
@@ -157,13 +152,15 @@ def add_op():
     if (token=='+' or token == '-'):
         match(token)
     else:
-        Error()
+        Error() 
+    text_file.write("Add_Operator Found \n")   
 
 def term():
 	factor()
 	while(token=="*" or token=="/"):
 		mulop()	
 		factor()
+	text_file.write("Term Found \n")	
 
 
 def mulop():
@@ -171,6 +168,7 @@ def mulop():
 		match(token)
 	else :
 		Error()
+	text_file.write("Mul_Operator Found \n")	
 
 def factor():
 	if(token=="number" or token=="identifier"):
@@ -180,6 +178,7 @@ def factor():
 		exp()
 		match(")")
 	else:
-		Error()    							
+		Error() 
+	text_file.write("Factor Found \n")	   							
 
 program()
