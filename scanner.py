@@ -1,24 +1,28 @@
 import re
 
-
 class Scanner :
 
 	def __init__(self) :
 		self.f_handle = open("tiny_sample_code.txt","r")
 		self.file = self.f_handle.readlines()
 		self.text_file = open("scanner_output.txt", "w")
+		self.tokens = []
 
 	def saveToken(self,token) :
 		specialSymbols = ["+","-","*","/","=","<",">","(",")",";",":="]
 		ReservedWords = ["if","then","else","end","repeat","until","read","write"]
 		if (token in specialSymbols) :
-			self.text_file.write("%s: special symbol\n" %token) 	
+			self.text_file.write("%s: special symbol\n" %token) 
+			self.tokens.append([token,"specialsymbol"])	
 		elif(token in ReservedWords) :
 			self.text_file.write("%s : reserved word\n" %token)
+			self.tokens.append([token,"reservedword"])
 		elif(re.match('[0-9]+',token)) :
-			self.text_file.write("%s : number\n" %token)			
+			self.text_file.write("%s : number\n" %token)
+			self.tokens.append([token,"number"])			
 		elif(re.match('[A-Za-z]',token)) :
 			self.text_file.write("%s : identifier\n" %token)
+			self.tokens.append([token,"identifier"])
 
 	def create_token(self,token,data,old_state,state) :
 		if(old_state == state) :
@@ -72,6 +76,7 @@ class Scanner :
 
 		self.saveToken(token)
 		self.text_file.close()	
+		return (self.tokens)
 
 
 			
