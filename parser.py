@@ -17,7 +17,7 @@ class Parser :
 		return adjusted_list	
 
 	def Error(self):
-		print ("Error found at",self.token)
+		print ("Error found at the token before the",self.token)
 		sys.exit()
 
 	def match(self,t):
